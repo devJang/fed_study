@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/devJang/fed_study/issues"
   },
-  "homepage": "https://github.com/devJang/fed_study#readme"
+  "homepage": "https://github.com/devJang/fed_study#readme",
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1"
+  }
 }
