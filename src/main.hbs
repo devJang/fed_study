@@ -1,26 +1,18 @@
-<div class="demo-layout-transparent mdl-layout mdl-js-layout">
-    {{> header}}
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
-        <nav class="mdl-navigation" data-view="list">
-        </nav>
+{{> header}}
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#tab1" class="mdl-tabs__tab">==></a>
+        <a href="#tab2" class="mdl-tabs__tab"id="showFruits">Tab Two</a>
+        <a href="#tab3" class="mdl-tabs__tab"id="showWeather">Tab Three</a>
     </div>
-    <main class="mdl-layout__content">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            id="showTable">
-            Button
-        </button>
-        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-            <thead>
-            <tr>
-                <th class="mdl-data-table__cell--non-numeric">name</th>
-                <th>Quantity</th>
-                <th>price</th>
-            </tr>
-            </thead>
-            <tbody data-view="table">
-
-            </tbody>
-        </table>
-    </main>
+    <div class="mdl-tabs__panel is-active" id="tab1">
+        <h1>버튼을 누르시오</h1>
+    </div>
+    <div class="mdl-tabs__panel" id="tab2">
+        {{> tab2}}
+    </div>
+    <div class="mdl-tabs__panel" id="tab3">
+        {{> tab3}}
+    </div>
 </div>
+

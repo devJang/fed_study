@@ -1,49 +1,64 @@
 import tplList  from './list.hbs';
-import tplTable from './table.hbs';
+import tplFruits from './fruits.hbs';
+import tplWeather  from './weather.hbs';
 import tplMain  from './main.hbs';
 import ajax     from './ajax';
 
 const $ = require('jquery');
-
+const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=seoul&mode=json' +
+	'&units=metric&cnt=7&apikey=8d554a626fc5d01d77812b612a6de257';
 $('#root').html(tplMain({}));
 
-/*
- * main.hbs
- * table.hbs
- */
-// Table Start !---------------------
+// createTable Start !---------------------
+function createTable(val) {
+	$('[data-view="fruits"]').html(tplFruits({
+		fruits : val
+	}));
+}
+function createWeather(val) {
+	$('[data-view="weather"]').html(tplWeather({
+		weather : val
+	}));
+}
+//--------------------- createTable End !
 
-var table = [{}];
-$('#showTable').on('click', () => {
-	console.log("click");
-	
-	var arr = [];
-	ajax('../data.json', (response) => {
-		var fruits = response.fruits;
-		for (var i = 0; i < fruits.length; i++) {
-			arr.push({
-				name     : fruits[i].name,
-				quantity : fruits[i].quantity,
-				price    : fruits[i].price
-			}); // arr.push
-			console.log(`${arr[i].name}는(은) ${arr[i].quantity}개에 ${arr[i].price}`);
-		}
-	}); // For
-	return table.push(arr);
-}); // onClick
+// Click Event Start !---------------------
+var flag = false;
 
-console.log(`test : ${table}`);
+$('#showFruits').on('click', () => {
+	if(flag === false){
+		loadTableData('../data.json', 'fruits');
+		flag = true;
+	} else {
+		createTable("");
+		flag = false;
+	}
+});
 
-$('[data-view="table"]').html(tplTable({
-	table : table
-}));
+$('#showWeather').on('click', () => {
+	if(flag === false){
+		loadTableData(url, 'weather');
+		flag = true;
+	} else {
+		createWeather("");
+		flag = false;
+	}
+});
+// --------------------- Click Event End !
 
-// Table End !---------------------
+function loadTableData(val, type){
+	if(type === 'fruits') {
+		ajax(val, (response) => {
+			createTable(response.fruits);
+		});
+	}
+	if(type === 'weather'){
+		ajax(val, (response) => {
+			createWeather(response.list);
+		});
+	}
+}
 
-/*
- * header.hbs
- * list.hbs
- */
 // List Start !---------------------
 
 const list = [{
