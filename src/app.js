@@ -74,4 +74,4 @@ $('[data-view="list"]').html(tplList({
 	list : list
 }));
 
-// List End !---------------------
+// ---------------------  List End !
