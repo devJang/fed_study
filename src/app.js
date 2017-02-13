@@ -7,6 +7,7 @@ import ajax         from './ajax';
 const $   = require('jquery');
 const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=seoul&mode=json' +
 	'&units=metric&cnt=7&apikey=8d554a626fc5d01d77812b612a6de257';
+
 $('#root').html(tplMain({}));
 
 // createTable Start !---------------------
