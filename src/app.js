@@ -10,55 +10,89 @@ const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=seoul&mode=
 
 $('#root').html(tplMain({}));
 
-// createTable Start !---------------------
-function createTable(val) {
-	$('[data-view="fruits"]').html(tplFruits({
-		fruits : val
-	}));
+// Table Controller !---------------------
+
+let controller = {
+	
+	fruits : (val, totalPrice) => {
+		$('[data-view="fruits"]').html(tplFruits({
+			fruits     : val,
+			totalPrice : totalPrice
+		}));
+	},
+	
+	weather : (val, date) => {
+		$('[data-view="weather"]').html(tplWeather({
+			weather : val,
+			date    : date
+		}));
+	},
+	
+	sum         : (val) => {
+		let totalPrice = 0;
+		
+		for (let i = 0; i < val.length; i++) {
+			totalPrice += val[i].price;
+		}
+		return totalPrice;
+	},
+	
+	dateWeather : (val) => {
+		let date = [];
+		
+		for (let i = 0; i < val.length; i++) {
+			date.push(new Date(val[i].dt * 1000));
+		}
+		return date;
+	},
+	
+	loadData : (val, type) => {
+		if (type === 'fruits') {
+			ajax(val, (response) => {
+				controller.fruits(response.fruits, controller.sum(response.fruits));
+			});
+		}
+		if (type === 'weather') {
+			ajax(val, (response) => {
+				controller.weather(response.list, controller.dateWeather(response.list));
+			});
+		}
+	}
 }
-function createWeather(val) {
-	$('[data-view="weather"]').html(tplWeather({
-		weather : val
-	}));
-}
-//--------------------- createTable End !
+
+//--------------------- Table Controller End !
+
 
 // Click Event Start !---------------------
-var flag = false;
+
+let flag = false;
 
 $('#showFruits').on('click', () => {
 	if (flag === false) {
-		loadTableData('../data.json', 'fruits');
+		controller.loadData('../data.json', 'fruits');
+		$('#showFruits').html("그 만 보 기");
 		flag = true;
 	} else {
-		createTable("");
+		controller.fruits("");
+		$('#showFruits').html("과 일 보 기");
 		flag = false;
 	}
 });
 
 $('#showWeather').on('click', () => {
 	if (flag === false) {
-		loadTableData(url, 'weather');
+		controller.loadData(url, 'weather');
+		$('#showWeather').html("그 만 보 기");
 		flag = true;
 	} else {
-		createWeather("");
+		controller.weather("");
+		$('#showWeather').html("날 씨 보 기");
 		flag = false;
 	}
 });
+
 // --------------------- Click Event End !
 
-function loadTableData(val, type) {
-	if (type === 'fruits') {
-		ajax(val, (response) => {
-			createTable(response.fruits);
-		});
-	}
-	if (type === 'weather') {
-		ajax(val, (response) => {
-			createWeather(response.list);
-		});
-	}
-}
 
 // List Start !---------------------
 
@@ -74,4 +108,4 @@ $('[data-view="list"]').html(tplList({
 	list : list
 }));
 
-// List End !---------------------
+// ---------------------  List End !

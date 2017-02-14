@@ -1,6 +1,15 @@
-{{#each weather}}
-    <tr>
-        <td class="mdl-data-table__cell--non-numeric">{{dt}}</td>
-        <td>{{temp.day}} </td>
-    </tr>
-{{/each}}
+<td><ul class='mdl-list'>
+    {{#each date as |date index|}}
+        <li class="mdl-list__item-text-body">
+            <input type="radio" class="mdl-radio__button" checked />
+            {{date}}</li>
+    {{/each}}
+</ul>
+</td>
+<td>
+    <ul class='mdl-list'>
+        {{#each weather}}
+            <li class="mdl-list__item-text-body">{{temp.day}}도</li>
+        {{/each}}
+    </ul>
+</td>

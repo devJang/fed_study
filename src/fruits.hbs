@@ -1,7 +1,9 @@
 {{#each fruits}}
     <tr>
         <td class="mdl-data-table__cell--non-numeric">{{name}}</td>
-        <td>{{quantity}}</td>
-        <td>{{price}}</td>
+        <td>{{quantity}}개</td>
+        <td>{{price}}원</td>
     </tr>
 {{/each}}
+    <td colspan="2">합계</td>
+    <td>{{totalPrice}}</td>
