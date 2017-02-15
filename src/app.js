@@ -10,57 +10,68 @@ const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=seoul&mode=
 
 $('#root').html(tplMain({}));
 
-// Table Controller !---------------------
+// Controller Start !---------------------
 
 let controller = {
-	
-	fruits : (val, totalPrice) => {
-		$('[data-view="fruits"]').html(tplFruits({
-			fruits     : val,
-			totalPrice : totalPrice
-		}));
-	},
-	
-	weather : (val, date) => {
-		$('[data-view="weather"]').html(tplWeather({
-			weather : val,
-			date    : date
-		}));
-	},
-	
-	sum         : (val) => {
-		let totalPrice = 0;
-		
-		for (let i = 0; i < val.length; i++) {
-			totalPrice += val[i].price;
-		}
-		return totalPrice;
-	},
-	
-	dateWeather : (val) => {
-		let date = [];
-		
-		for (let i = 0; i < val.length; i++) {
-			date.push(new Date(val[i].dt * 1000));
-		}
-		return date;
-	},
-	
-	loadData : (val, type) => {
-		if (type === 'fruits') {
-			ajax(val, (response) => {
-				controller.fruits(response.fruits, controller.sum(response.fruits));
-			});
-		}
-		if (type === 'weather') {
-			ajax(val, (response) => {
-				controller.weather(response.list, controller.dateWeather(response.list));
-			});
-		}
-	}
+
+    // 데이터 로직
+    data : {
+        // 과일 테이블의 합계를 구한다.
+        fruitsTotalPrice : (val) => {
+            let totalPrice = 0;
+
+            for (let i = 0; i < val.length; i++) {
+                totalPrice += val[i].price;
+            }
+            return totalPrice;
+        },
+
+        // 날씨 테이블의 일자를 변환한다.
+        weatherDate : (val) => {
+            let date = [];
+
+            for (let i = 0; i < val.length; i++) {
+                date.push(new Date(val[i].dt * 1000));
+            }
+            return date;
+        },
+
+        // 요청하는 데이터를 불러온다
+        loadAjax : (val, type) => {
+            if (type === 'fruits') {
+                ajax(val, (response) => {
+                    controller.table.fruits(response.fruits, controller.data.fruitsTotalPrice(response.fruits));
+                });
+            }
+            if (type === 'weather') {
+                ajax(val, (response) => {
+                    controller.table.weather(response.list, controller.data.weatherDate(response.list));
+                });
+            }
+        }
+    },
+
+    // 테이블을 담당하는 로직
+    table : {
+        // 과일 테이블을 생성, 수정한다.
+        fruits : (val, totalPrice) => {
+            $('[data-view="fruits"]').html(tplFruits({
+                fruits     : val,
+                totalPrice : totalPrice
+            }));
+        },
+
+        // 날씨 테이블을 생성, 수정한다.
+        weather : (val, date) => {
+            $('[data-view="weather"]').html(tplWeather({
+                weather : val,
+                date    : date
+            }));
+        }
+    }
 }
 
-//--------------------- Table Controller End !
+//--------------------- Controller End !
 
 
 // Click Event Start !---------------------
@@ -69,24 +80,24 @@ let flag = false;
 
 $('#showFruits').on('click', () => {
 	if (flag === false) {
-		controller.loadData('../data.json', 'fruits');
-		$('#showFruits').html("그 만 보 기");
+		controller.data.loadAjax('../data.json', 'fruits');
+		$('#showFruits').html(`그 만 보 기`);
 		flag = true;
 	} else {
-		controller.fruits("");
-		$('#showFruits').html("과 일 보 기");
+		controller.table.fruits("");
+		$('#showFruits').html(`과 일 보 기`);
 		flag = false;
 	}
 });
 
 $('#showWeather').on('click', () => {
 	if (flag === false) {
-		controller.loadData(url, 'weather');
-		$('#showWeather').html("그 만 보 기");
+		controller.data.loadAjax(url, 'weather');
+		$('#showWeather').html(`그 만 보 기`);
 		flag = true;
 	} else {
-		controller.weather("");
-		$('#showWeather').html("날 씨 보 기");
+		controller.table.weather("");
+		$('#showWeather').html(`날 씨 보 기`);
 		flag = false;
 	}
 });
