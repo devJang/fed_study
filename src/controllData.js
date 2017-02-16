@@ -4,21 +4,20 @@
 
 export default {
     // 과일 테이블의 합계를 구한다.
-    fruitsTotalPrice: (val) => {
+    fruitsTotalPrice: (priceItar) => {
         let totalPrice = 0;
 
-        for (let i = 0; i < val.length; i++) {
-            totalPrice += val[i].price;
+        for (let val of priceItar) {
+            totalPrice += val.price;
         }
         return totalPrice;
     },
 
     // 날씨 테이블의 일자를 변환한다.
-    weatherDate: (val) => {
+    weatherDate: (dateItar) => {
         let date = [];
-
-        for (let i = 0; i < val.length; i++) {
-            date.push(new Date(val[i].dt * 1000));
+        for (let val of dateItar) {
+            date.push(new Date(val.dt * 1000));
         }
         return date;
     }
