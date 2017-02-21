@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hello Front-end</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="src/style/material.indigo-pink.min.css">
-    <script defer src="src/style/material.min.js"></script>
+	<title>Hello Front-end</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="src/style/material.indigo-pink.min.css">
+	<script defer src="src/style/material.min.js"></script>
+	<script type="text/javascript"
+			src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=A1HuOAFCw82_8CWwu5Nv"></script>
+	<style>
+		.demo-layout-transparent .mdl-layout__header,
+		.demo-layout-transparent .mdl-layout__drawer-button {
+			color: white;
+		}
+
+		.mdl-layout__header {
+			display: flex;
+		}
+	</style>
 </head>
 <body>
-<style>
-    /*.demo-layout-transparent .mdl-layout__header,*/
-    /*.demo-layout-transparent .mdl-layout__drawer-button {*/
-        /*color: white;*/
-    /*}*/
-</style>
-<div class="mdl-grid" id="root"></div>
+<div id="root"></div>
+<div id="map" style="height: 400px"></div>
 <script src="bundle.js"></script>
 </body>
 </html>
