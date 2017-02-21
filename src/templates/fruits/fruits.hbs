@@ -12,19 +12,19 @@
             <tr>
                 <td class="mdl-data-table__cell--non-numeric">{{name}}</td>
                 <td>{{quantity}}</td>
-                <td>{{numberFormat price}}</td>
+                <td>{{currency price}}</td>
             </tr>
         {{else}}
             <tr style="color:red">
                 <td class="mdl-data-table__cell--non-numeric">{{name}}</td>
                 <td>{{quantity}}</td>
-                <td>{{numberFormat price}}</td>
+                <td>{{currency price}}</td>
             </tr>
         {{/when}}
     {{/each}}
     <tr>
         <td>합계</td>
-        <td colspan="2">{{numberFormat total}}</td>
+        <td colspan="2">{{currency total}}</td>
     </tr>
     </tbody>
 </table>
