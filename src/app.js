@@ -1,6 +1,6 @@
 import tplList       from './templates/list.hbs';
 import tplMain       from './templates/main.hbs';
-import component       from './component';
+import Component from './component';
 
 const $ = require('jquery');
 const list = require('./json/drawer-list.json');
@@ -16,6 +16,8 @@ const DOM = {
 	fruitList: '[data-view="fruits"]',
 	weatherList: '[data-view="weather"]'
 };
+
+let component = new Component();
 
 $('#root').html(tplMain({}));
 $(DOM.drawerList).html(tplList({
