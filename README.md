@@ -1,5 +1,2 @@
-# Front-end Developer Study
-https://github.com/devJang/fed_study.git
-### 02 / 12
-* Handlebars
-* Ajax & JSON
+# Handlebar Component Study
+Make Component Practice
